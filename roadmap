@@ -14,7 +14,7 @@ projekty:
 - py: learning + programming
 - django: mastering, książka, kozaczko, goat - tdd
 - flask: książka, Grinberg - tutorial, Grinberg - książka
-- web frontend - książki, Pluralsight, yt
+- web frontend - książki, Pluralsight, yt (java brains)
 
 - Jenkins + STX
 - Postgre - yt
@@ -23,4 +23,5 @@ projekty:
 JAVA:
 - ścieżka Pluralsight i pozostałe kursy
 - specjalizacje - książki i yt
-- spring i inne kursy - owczarek
+- spring i inne kursy - owczarek; inne spring
+~ core java - dla ugruntowania i szczegółów
