@@ -1,0 +1,75 @@
+sudo apt-get install python3-pip
+
+instalacja do folderu instalacji użytkownika ~/.local
+pip install --user flask
+
+sudo pip3 install flask
+sudo pip3 install feedparser
+
+sudo apt-get install apache2
+
+zainstaluje pythona2 i biblioteki dla pythona2
+sudo apt-get install libapache2-mod-wsgi
+
+odinstalowuje biblioteki dla pythona2, jeśli były zainstalowane
+sudo apt-get install libapache2-mod-wsgi-py3
+wyrzucamy biblioteki pythona2 od apache
+sudo apt-get autoremove
+możemy też odinstalować pythona2
+sudo apt-get remove python
+sudo apt-get autoremove
+
+używamy IP host-only adapter
+musimy mieć zainstalowany git
+
+sudo chown -R gulci /var/www
+cd /var/www
+git clone <repo>
+
+cd headlines
+nano headlines.wsgi
+
+import sys
+sys.path.insert(0, "/var/www/headlines")
+from headlines import app as application
+
+zapisujemy f2 lub ctrl + x
+
+sudo chown -R gulci /etc/apache2
+cd /etc/apache2/sites-available
+tworzymy plik konfiguracji dla apache virtual host, gdzie podajemy informację o naszym pliku wsgi
+z jednego serwera będziemy mogli serwować wiele stron, np. będziemy mieli kilka domen i dla każdej z nich stworzymy apache virtual host z konfiguracją dla wybranej aplikacji
+nano headlines.conf
+
+
+<VirtualHost *>
+	ServerName example.com
+
+	WSGIScriptAlias / /var/www/headlines/headlines.wsgi
+	WSGIDaemonProcess headlines
+	<Directory /var/www/headlines>
+		WSGIProcessGroup headlines
+		WSGIApplicationGroup %{GLOBAL}
+			Order deny,allow
+			Allow from all
+	</Directory>
+</VirtualHost>
+
+http://flask.pocoo.org/docs/0.10/deploying/mod_wsgi/
+
+w apache mamy foldery sites-available (tutaj stworzyliśmy naszą konfigurację) oraz sites-enabled (zawiera skróty do aktywnych konfiguracji)
+domyślną konfiguracją jest 000-default.conf (obecna w obu folderach, odpowiedzialna za wyświetlanie domyślnej strony apache)
+
+robimy zamianę
+sudo a2dissite 000-default.conf
+sudo a2ensite headlines.conf
+sudo service apache2 reload
+
+w razie błędów (Error 500) mamy log
+wyświetlanie końcówki pliku z updatem wyjścia
+sudo tail –f /var/log/apache2/error.log
+
+usunięcie zawartości loga
+cp /dev/null /var/log/apache2/error.log
+po restarcue apache usunięty log powinien się odtworzyć
+

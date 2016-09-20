@@ -1,0 +1,32 @@
+- ściąga i uaktualnia listy pakietów
+sudo apt-get update
+- update istniejących pakietów
+sudo apt-get upgrade
+- dodatkowo porządkowanie zależności, usuwanie przestarzałych pakietów, konieczne przed upgradem dystrybucji
+sudo apt-get dist-upgrade
+- upgrade systemu nie dokona się sam jeśli w pliku /etc/apt/sources.list nie umieścimy repozytoriów do nowej wersji systemu
+- upgrade systemu (ubuntu)
+sudo do-release-upgrade
+- sprawdzenie dostępności nowego wydania systemu (ubuntu)
+sudo do-release-upgrade -d
+- instalacja pakietu, samo apt jest user-friendly, pod maską różni się od apt-get
+sudo apt install gedit
+- instalacje pod kątem PHP
+sudo apt-get install apache2
+sudo add-apt-repository ppa:ondrej/php
+sudo apt-get update
+sudo apt-get install php5.6
+sudo php -v
+sudo apt-get install mysql-server
+sudo apt-get install php5.6-mysql
+sudo apt-get install phpmyadmin
+sudo /etc/init.d/apache2 restart
+(sudo service apache2 restart)
+- przeglądarka -> localhost
+- kod strony www
+/var/www/html/index.html
+- zmiana uprawnień do folderu html
+sudo chmod -R 777 html/
+- instalacja sublime
+sudo apt-get install sublime-text
+- uruchamiamy subl

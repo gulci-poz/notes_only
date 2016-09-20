@@ -1,0 +1,3 @@
+w pliku /etc/yum.repos.d/dockerrepo.repo
+$releasever zmieniamy na 23, na razie nie ma œcie¿ki z 24 (a taka jest $releasever naszego systemu)
+24 jest tylko w ga³êzi experimental, mo¿na na ni¹ zmieniæ ca³¹ œcie¿kê

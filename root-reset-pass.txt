@@ -1,0 +1,6 @@
+linia z linux lub linux16, dodajemy po spacji:
+rw init=/bin/bash
+
+passwd
+touch / .autorelabel
+/sbin/reboot -f
