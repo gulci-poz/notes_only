@@ -1,21 +1,26 @@
 ~ PS + AI + ID
-
-LINUX + DOCKER
-
+LINUX + DOCKER (development i produkcja)
 BACKEND + FRONTEND + DB
+JAVA
 
-- Web
-- MEAN - book
-- PHP - book
+projekty:
+- melawika (django - książka)
+- djmaster (django - mastering)
+- headlines (flask - książka)
+- microblog (flask - Grinberg - tutorial)
+- library (node + express - Pluralsight)
+- locator8 (getting mean - książka)
+
 - py: learning + programming
-- django: mastering, book, kozaczko, goat
-- flask: book, tutorial, book - Grinberg
+- django: mastering, książka, kozaczko, goat - tdd
+- flask: książka, Grinberg - tutorial, Grinberg - książka
+- web frontent - książki i Pluralsight
+
 - Jenkins + STX
 - Postgre - yt
 - microservices
-~ Pluralsight + books
 
-~ Grinberg - YT '14, '15, '16 ++
-~ Jonathan Mills - OAuth, Node & Express; dev YT OAuth
-~ emberjs - dokumentacja, Pl. emberjs Fund., dev YT emberjs
-~ flask OAuth - dokumentacja, YT
+JAVA:
+- ścieżka Pluralsight i pozostałe kursy
+- specjalizacje - książki i yt
+- spring i inne kursy - owczarek
