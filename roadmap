@@ -23,5 +23,10 @@ projekty:
 JAVA:
 - ścieżka Pluralsight i pozostałe kursy
 - specjalizacje - książki i yt
-- spring i inne kursy - owczarek; inne spring
+    - testing in java
+    - java 8 books
+    - Effective Java
+    - Java Puzzlers
+    - Java Concurrency in Practice
+- spring i inne kursy - owczarek; inne spring, np. książka
 ~ core java - dla ugruntowania i szczegółów
