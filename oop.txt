@@ -1,0 +1,18 @@
+agile/iterative: just enough design to let us move forward successfully
+
+you don't go fast by rushing
+you want to go fast, go well
+move deliberately instead of rapidly
+coupling (dependency): rigidity, fragility, speghetti (non-reusability)
+software design (oo design) ~ cutting the dependencies (immobility)
+dependency injection - inversion of control (polymorphism allows that)
+
+SOLID
+(S)ingle Responsibility Principle - separation of concerns
+(O)pen/Closed Principle - a module should be open for extension, but closed for modification (well enough done abstraction that later provides us polymorphism)
+we build good abstraction based on client's response to presented basic code (sprints)
+(L)iskov Substitution Principle - we need a common representation (base class interface ~ rather abstract class in java) instead of sharing a relation that is represented (lawyers - divorce example)
+we don't want to check the type of an object
+inheritance is not a "is-a" relationship
+(I)nterface Segregation Principle - many client-specific interfaces are better than one general-purpose interface
+(D)ependency Inversion Principle - depend upon abstractions, do not depend upon concretions
