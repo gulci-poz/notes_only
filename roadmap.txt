@@ -28,5 +28,6 @@ JAVA:
     - Effective Java
     - Java Puzzlers
     - Java Concurrency in Practice
+    - Java Design Patterns
 - spring i inne kursy - owczarek; inne spring, np. książka
 ~ core java - dla ugruntowania i szczegółów
