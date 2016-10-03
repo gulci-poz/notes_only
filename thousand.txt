@@ -1,0 +1,21 @@
+0) RULES
+Zwycięzca - pierwszy gracz, który zdobędzie >=1000 punktów w poszczególnych rozdaniach.
+24 karty - od 9 do asa.
+Pary dama-król tego samego koloru (w każdym kolorze) tworzą meldunki - 40, 60, 80, 100 punktów w zależności od koloru.
+
+Przebieg partii:
+* Tasowanie/rozdanie kart - normalnie robią to w cyklu gracze (po kolei na lewo + oferta przełożenia dla gracza po prawej; umówmy się, że rozdawanie idzie w lewo), u nas robi to komputer-krupier.
+Karty są tajne między graczami. Odsłonięcie następuje po rozdaniu kart wszystkim graczom.
+Musik - 3 karty (2 karty na 2 musiki - 2 osoby). Na musik nie może iść pierwsza, ani ostatnia karta rozdania, ani kolejne dwie karty. Gracze mogą nie mieć równej ilości kart (rozgrywka 4-osobowa).
+
+* Licytacja - wyłonienie grającego (losowanie, wszyscy gracze na cykl); grający bierze musik i rozpoczyna partię.
+
+To be continued...
+
+1) REQUIREMENTS.
+Apka daje możliwość rozegrania partii tysiąca 2, 3 lub 4 graczom.
+Apka daje możliwość rozegrania partii dowolnej kombinacji graczy komputerowych i ludzkich, w szczególności wszystkim graczom ludzkim lub komputerowym.
+Apka pozwala dobrać użytkowników komputerowych lub grę tylko w ludzkim gronie.
+Apka pozwala śledzić rozgrywkę, gdy wszyscy gracze są komputerowi. 
+Apka tasuje, rozdaje, notuje wyniki, nadzoruje rozgrywkę i ogłasza zwyzięzcę.
+Apka zapisuje statystykę każdej rozgrywki do rejestru.

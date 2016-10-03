@@ -19,7 +19,7 @@ Agile/iterative: just enough design to let us move forward successfully.
 
 Continuous process of refinement (agile/iterative):
 
-1. Gather REQUIREMENTS.
+1. Gather REQUIREMENTS. Focus on the SYSTEM.
 We need something written down.
 An absolute minimum set of requirements at the beginning.
 What the app must do. What problem it solves. Be specific.
@@ -35,18 +35,68 @@ these are the '-ilities' for non-functional requirements:
 - supportability requirements - who maintains; need of internationalization
 + design requirements (must be an iPhone app etc.)
 + implementation requirements (language, standard, methodology)
-+ interface requirements (interface to an external system)
++ interface requirements (interface to an external system, not GUI)
 + physical requirements (physical constraints)
 
-2. DESCRIBE the app.
-Build a simple narrative in plain and conversational language for how people use the app. Techniques: use cases and user stories. Smallest set of stories that will make it a real application. May be incomplete and may change.
+2. DESCRIBE the app. Foucus on the USER. USER'S perspective. USER'S goal.
+Build a simple narrative in plain and conversational language for how people use the app. Smallest set of stories that will make it a real application. May be incomplete and may change.
+Describing the feature interaction in full context.
 Sometimes creating a mockup or a prototype of a user interface.
+Techniques: use cases and user stories.
+Use cases:
+- title - what is the goal?
+short phrase, active verb - purchase items, transfer funds etc.
+- actor - who desires it?
+anything with behaviour who lives outside of the app but has a goal that want to accomplish with that app
+external systems / organizations
+different roles / security groups
+job titles / departments (different scenario for different jobs or even days), with situation of job fluidity - requester, approver
+multiple actors - primary actors (initiators of the use case, not necessary the most important ones), supporting actors
+goal not always succeed - alternative flow
+- scenario - how is it accomplished?
+a paragraph or a sequence of steps (depends on a team: concrete and formal or casual - readability, ease of use and ease of creation over formality)
+short, readable, concise
+active voice, omit needless words, omit details
+focus on intention - keep the user interface out of it
+user focused - goal focused (not system focused, for example not logging in)
+several steps - one encounter (logging in might be a part of a use case)
+multiple scenarios - sunny day scenarios + alternative paths
+who performs system administration tasks?
+who manages users and security?
+what happens if the system fails?
+is anyone looking at performance metrics or logs?
++ extensions (alternate paths - flows)
++ preconditions
++ postconditions, stakeholders, technology list etc. (template)
+stakeholders - anyone who has an interest in a matter
+Use case diagrams - interaction of actors and use cases in context at the same time, different perspective - we still need use cases; this actor uses this use case
+User stories:
+one or two sentences, useful for brainstorming
+we're not describing user interface
+we're expressing one need
+early project preparation, placeholder for conversatios - a remainder for getting deeper (use case - record of conversation that already happened)
+good for scrum or extreme programming
+As a (type of user)
+I want (goal)
+so that (reason) <- optional
 
 3. IDENTIFY the main objects.
 Identifying classes. Most important THINGS from the stories - not everything become a class.
+Pick up the nouns from use cases and user stories for candidates objects.
+Discover class relationships (conceptual object modeling, conceptual object diagram - classes with simple verbs as relationships + multiplicity).
 
 4. Describe the INTERACTIONS.
-Formal descriptions. Helps understand responsibilities and behaviours of the objects. Technique: sequence diagram.
+Formal descriptions (instead of simple verbs). Help understand responsibilities (main behaviour) and behaviours of the objects.
+This time we pick up verbs and verb phrases from use cases and user stories. Whose responsibility is this? We have different objects from actors' perspective from one user case. We have to consider not only what happens but whose job it is.
+In contrary to use cases we have to decide where the responsability lies for performing actions, not which objects initializes the action.
+Beginners: too much behaviour to an actor.
+"System" object - avoid global master objects (procedural programming).
+Responsibilies should be well distributed. Object should be resposible for itself as much as possible.
+Alternative for conceptual object diagram - CRC cards - Class Responsability Collaboration (other classes we interact with). Actions as simple verb phrases.
+One card - one class.
+Moving the cards around.
+
+Technique: sequence diagram.
 
 5. Create a CLASS DIAGRAM.
 Visual representation of the classes. Be specific about OO principles.
