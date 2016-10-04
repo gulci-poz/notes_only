@@ -1,0 +1,31 @@
+ctrl + l - clear console
+ctrl + a - carriage return
+ctrl + k - clears the line after the cursor
+
+ln -s apps/jdk1.8.0_102/ apps/jdk
+ln -s apps/sts-bundle/sts-3.8.1.RELEASE apps/sts
+
+vim .bahsrc
+export JAVA_HOME="/home/apps/jdk"
+export PATH="$JAVA_HOME/bin:$PATH"
+export PATH="/home/gulci/apps/sts:$PATH"
+source .bashrc
+
+ln -s apps/jdk1.8.0_102/bin/java apps/java
+sudo update-alternatives --install "/home/gulci/apps/java" "java" "/home/gulci/apps/jdk1.8.0_102/bin/java" 1024
+
+ln -s apps/jdk1.8.0_102/bin/javac apps/javac
+sudo update-alternatives --install "/home/gulci/apps/javac" "javac" "/home/gulci/apps/jdk1.8.0_102/bin/javac" 1024
+
+update-alternatives --display java
+update-alternatives --display javac
+sudo update-alternatives -remove-all java
+sudo update-alternatives -remove-all javac
+
+http://mvnrepository.com/
+
+ctrl + shift + f - reformat code
+ctrl + 1 - context menu, what to do
+alt + shift + s - context menu, code generator (getter/setter/constructor)
+sysout + ctrl + space
+selection + shift + alt + l - extract local variable
