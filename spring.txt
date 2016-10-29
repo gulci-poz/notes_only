@@ -2,25 +2,25 @@ ctrl + l - clear console
 ctrl + a - carriage return
 ctrl + k - clears the line after the cursor
 
-ln -s apps/jdk1.8.0_102/ apps/jdk
-ln -s apps/sts-bundle/sts-3.8.1.RELEASE apps/sts
+ln -s /home/gulci/apps/<jdk_root_directory>/ /home/gulci/apps/jdk
+ln -s /home/gulci/apps/sts-bundle/<sts_release_directory>/ /home/gulci/apps/sts
 
 vim .bahsrc
-export JAVA_HOME="/home/apps/jdk"
+export JAVA_HOME="/home/gulci/apps/jdk"
 export PATH="$JAVA_HOME/bin:$PATH"
 export PATH="/home/gulci/apps/sts:$PATH"
 source .bashrc
 
-ln -s apps/jdk1.8.0_102/bin/java apps/java
-sudo update-alternatives --install "/home/gulci/apps/java" "java" "/home/gulci/apps/jdk1.8.0_102/bin/java" 1024
+ln -s /home/gulci/apps/jdk/bin/java /home/gulci/apps/java
+sudo update-alternatives --install /home/gulci/apps/java java /home/gulci/apps/jdk/bin/java 1024
 
-ln -s apps/jdk1.8.0_102/bin/javac apps/javac
-sudo update-alternatives --install "/home/gulci/apps/javac" "javac" "/home/gulci/apps/jdk1.8.0_102/bin/javac" 1024
+ln -s /home/gulci/apps/jdk/bin/javac /home/gulci/apps/javac
+sudo update-alternatives --install /home/gulci/apps/javac javac /home/gulci/apps/jdk/bin/javac 1024
 
 update-alternatives --display java
 update-alternatives --display javac
-sudo update-alternatives -remove-all java
-sudo update-alternatives -remove-all javac
+sudo update-alternatives --remove java /home/gulci/apps/jdk/bin/java
+sudo update-alternatives --remove javac /home/gulci/apps/jdk/bin/javac
 
 http://mvnrepository.com/
 
