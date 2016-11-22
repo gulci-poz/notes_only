@@ -7,7 +7,7 @@ Get-NetIPAddress -InterfaceAlias ethernet0
 New-NetIPAddress -InterfaceAlias ethernet0 -IPAddress <address> -PrefixLength <24> -DefaultGateway <address>
 Set-NetIPInterface -InterfaceAlias ethernet0 -Dhcp Enabled
 Get-NetIPConfiguration -InterfaceAlias ethernet0
-Set-DnsClientServerAddress -InterfaceAlias ethernet0 ("coma", "separated", "addresses")
+Set-DnsClientServerAddress -InterfaceAlias ethernet0 -ServerAddresses address1, address2, ...
 hostname
 Get-Content env:computername
 Rename-Computer -NewName <newName> -Restart
