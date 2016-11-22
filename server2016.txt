@@ -19,7 +19,7 @@ Get-NetFirewallRule -Name corenet-igmp-in
 Get-NetFirewallRule -Name corenet-igmp-out
 Get-NetFirewallRule -Name corenet-igmp-in | Enable-NetFirewallRule
 Get-NetFirewallRule -Name corenet-igmp-out | Enable-NetFirewallRule
-display groups
+# display groups:
 Get-NetFirewallRule | ft displayname, displaygroup
 Enable-NetFirewallRule -DisplayGroup "file and printer sharing"
 New-NetFirewallRule -DisplayName "Allow All Traffic" -Direction outbound -Action allow
@@ -28,9 +28,11 @@ Add-Computer -DomainName "company.pri" -Restart
 Get-WindowsFeature -ComputerName server1
 Install-WindowsFeature -Name "fs-fileserver" -ComputerName server1
 Enter-PSSession server1
-Kerberos, domain, HTTPS transport or TrustedHosts
+# Kerberos, domain, HTTPS transport or TrustedHosts:
 winrm.cmd
 winrm help config
+winrm get winrm/config/client
+winrm set winrm/config/client '@{TrustedHosts="serverName"}'
 
 Install-WindowsFeature AD-Domain-Services -IncludeManagementTools
 Install-ADDSForest -DomainName gnet.com
