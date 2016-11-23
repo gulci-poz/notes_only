@@ -27,10 +27,13 @@ New-NetFirewallRule -DisplayName "Allow All Traffic" -Direction inbound -Action 
 Add-Computer -DomainName "company.pri" -Restart
 Get-WindowsFeature -ComputerName server1
 Install-WindowsFeature -Name "fs-fileserver" -ComputerName server1
+Uninstall-WindowsFeature telnet-server -remove
+# Windows\WinSxS - modularization and versioning or features and roles
+# sources\sxs - on ISO image
 Enter-PSSession server1
 # Kerberos, domain, HTTPS transport or TrustedHosts:
-winrm.cmd
 winrm help config
+winrm quickconfig
 winrm get winrm/config/client
 winrm set winrm/config/client '@{TrustedHosts="serverName"}'
 
