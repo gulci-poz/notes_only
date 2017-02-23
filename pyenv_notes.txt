@@ -1,0 +1,16 @@
+- ściąga, buduje i instaluje wybraną wersję
+pyenv install 3.6.0
+
+- tworzy wirtualne środowisko
+pyenv virtualenv 3.6.0 py36
+
+- dostępność dla użytkownika
+pyenv global general
+
+- można użyć local w wybranym folderze,
+wtedy mamy dostępność dla folderu (projektu)
+
+pyenv uninstall py36
+
+- powrót do środowiska systemowego
+pyenv global system
