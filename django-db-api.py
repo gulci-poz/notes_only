@@ -59,3 +59,16 @@ Choice.objects.filter(question__pub_date__year=current_year)
 c = q.choice_set.filter(choice_text__startswith='Just hacking')
 c.delete()
 q.choice_set.all()
+
+# taggit
+from blog.models import Post
+
+post = Post.objects.get(id=1)
+post.tags.add('music', 'jazz', 'django')
+post.tags.all()
+
+post.tags.remove('django')
+post.tags.all()
+
+localhost:8000/admin/taggit/tag
+localhost:8000/admin/blog/post
