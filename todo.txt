@@ -1,0 +1,6 @@
+Po zakończeniu projektu djangular:
+- aplikacja front-end ng2, rozdział front-end od back-end, JWT Authentication
+~ kontroler ma nasłuchiwać, czy nie zmieniły się dane (komentarz - route, -> powtórka z angulara)
+~ baza Postgres
+~ HTTPS i django
+- środowisko testowe w linuksie (nginx) jak w djgoat i ze strukturą jak w mydevil oraz dodatkowy deploy z PyCharm do testów

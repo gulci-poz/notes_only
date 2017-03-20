@@ -1,0 +1,309 @@
+docker daemon to część serwerowa, nazywana również docker engine
+dawniej pisano również, że docker engine = docker client + docker daemon
+klient odpytuje demona za pomocą API
+demon pośredniczy w kontakcie z OS (OS ma z kolei API do jądra, to różne biblioteki, m. in. lxc)
+od wersji 0.9 docker ma swoją bibliotekę libcontainer (napisana w golang), dzięki której daemon rozmawia bezpośrednio z jądrem
+API dokera jest takie samo (co do składni) jak w linuksie
+Windows Server, podobnie do linuksowego lxc, eksponuje Windows Server Container Support
+
+trzeba zainstalować moduł PowerShell, żeby uaktywnić funkcję kontenerów, potrzebujemy również docker engine i docker client
+https://docs.microsoft.com/en-us/virtualization/windowscontainers/quick-start/quick-start-windows-server
+sprawdzamy, czy Windows jest aktualny
+sconfig
+
+musimy mieć elevated PS (nie tylko w core):
+Start-Process PowerShell –Verb RunAs
+
+Server Core ma problem ze sprawdzeniem sumy kontrolnej pobranego zipa
+https://blogs.technet.microsoft.com/secguide/2014/04/07/why-were-not-recommending-fips-mode-anymore/
+
+Install-Module -Name DockerMsftProvider -Force
+Install-Package -Name docker -ProviderName DockerMsftProvider -Force
+Restart-Computer -Force
+
+docker run hello-world:nanoserver
+docker run microsoft/dotnet-samples:dotnetapp-nanoserver
+
+wsparcie na poziomie jądra oferuje Windows 2016 Server, w Windows 10 Pro/Enterprise możemy używać tylko kontenerów HyperV
+kontenery HyperV zapewniają lekką wirtualną maszynę z izolacją jądra systemu; wirtualna maszyna jest oparta na NanoServer (lub Server Core), możemy używać API dokera lub PowerShell cmdlets
+kontenery HyperV są dostępne również w Windows Server, używamy tego samego API dokera, jest opcja --isolation=hyperv
+na wirtualnej maszynie nie udaje się efektywnie zainstalować HyperV, ponieważ brak jest sprzętowego wsparcia dla wirtualizacji
+
+demon implementuje docker remote API, jeśli nie mamy lokalnie obrazu, to docker pobiera go z docker hub
+kontenery działają jako podprocesy demona
+w przypadku wirtualnych maszyn mamy hypervisora i wirtualne os-y, w przypadku kontenerów mamy cgroups, dostęp do nich jest za pomocą procesu wirtualnego środowiska, separację zasobów dają nam namespaces
+z tak wyeksponowanymi zasobami musi się dogadać demon dokera
+izolacja kontenerów dokera odbywa się względem następujących aspektów:
+1) PID namespace - identyfikatory i możliwości procesu
+2) UTS namespace - nazwa hosta i domeny
+3) MNT namespace - dostęp do systemu plików i jego struktura
+4) IPC namespace - komunikacja między procesami poprzez pamięć współdzieloną
+5) NET namespace - dostęp do sieci i jej struktura
+6) USR namespace - nazwa i identyfikator użytkownika
+7) chroot() - kontroluje lokalizację roota systemu plików
+8) cgroups - ochrona zasobów
+
+sudo curl -fsSL https://get.docker.com/ | sh
+
+w razie problemów, ręczne dodanie klucza:
+sudo curl -fsSL https://get.docker.com/gpg | sudo apt-key add -
+
+używanie dokera jako nie-root:
+sudo usermod -aG docker gulci
+
+można też dodać repo w systemie:
+sudo apt-get -y install apt-transport-https ca-certificates curl
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository \
+       "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+       $(lsb_release -cs) stable"
+sudo apt-get update
+sudo apt-get -y install docker-ce
+
+instalacja docker-compose jako binarki w systemie:
+sudo -i
+może się nie udać z samymy sudo, musimy się wlogować na sesję
+curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+exit
+
+docker-compose można też zainstalować przez pip (najlepiej w virtualenv) lub jako kontener
+
+docker machine umożliwia instalację docker engine na wirtualnych hostach oraz zarządzanie hostami (nie tylko lokalnie), można skonfigurować klienta do kontaktu z innym demonem (np. zdalnym, AWS itp.)
+
+instalacja binarki docker-machine:
+sudo -i
+curl -L https://github.com/docker/machine/releases/download/v0.10.0/docker-machine-`uname -s`-`uname -m` > /usr/local/bin/docker-machine
+chmod +x /usr/local/bin/docker-machine
+exit
+
+docker kitematic - narzędzie GUI do zarządzania kontenerami (legacy)
+
+docker toolbox zawiera docker-machine, docker-compose, docker-kitematic oraz docker client; docker engine (daemon) jest instalowany na konkretnej wirtualnej maszynie
+docker toolbox daje nam linuksa na vboksie (boot2docker)
+docker toolbox jest legacy
+
+docker for Windows działa tylko w Win10 Pro x64, w Windows Home musimy użyć docker toolbox, mamy wtedy linuksa boot2docker
+docker for Windows sam powinien włączyć HyperV (funkcja kontenerów też powinna być włączona)
+musimy mieć też wsparcie dla sprzętowej wirtualizacji
+docker for Windows oficjalnie nie wspiera zagnieżdżonej wirtualizacji
+
+docker for windows może działać ze sterownikami hyperv lub virtualbox
+w obu przypadkach mamy możliwość korzystania z maszyn NanoServer lub Server Core
+
+HyperV i VBox nie mogą jednocześnie korzystać ze sprzętowego wspomagania wirtualizacji
+
+na osx hypervisor to xhyve
+
+docker version
+docker info
+docker run hello world
+docker ps
+docker ps -a
+docker ps -aq
+docker images
+docker pull alpine
+docker pull ubuntu
+docker pull ubuntu:16.04
+docker rmi <name[:tag]|id>
+docker rm <id|name>
+
+docker run -it <image> bash
+w takim kontenerze mamy tylko jeden proces: bash
+ps -elf (e - show the environment after command; f - full-format, including command lines; l - long format)
+bash forkuje jedynie tymczasowe procesy ps i top w momencie wydania komend
+kontenery windowsowe mają więcej procesów, wszystko zależy od jądra
+
+exit spowoduje wyjście z kontenera i zamknięcie jedynego procesu, a zarazem zatrzymanie kontenera
+można wyjść z kontenera za pomocą ctrl p+q
+
+docker run -it bash (osobny obraz bash)
+dołączamy STDIN (-i) oraz STDOUT/STDERR (-a)
+docker start -ai <id|name> (musimy mieć wcześniej run z -it)
+docker stop <id|name>
+docker rm $(docker ps -aq) (quiet)
+to samo można zrobić z docker stop
+można pominąć stop używając rm -f
+można też usunąć obrazy
+docker rmi $(docker images -q)
+
+docker run -d --name web -p 80:8080 nigelpoulton/pluralsight-docker-ci
+-d uruchomienie w tle (detached)
+bez -d będziemy dostawali w konsoli wszystkie komunikaty, np. zapytania HTTP do nginx
+forwardowanie portu 80 hosta (localhost) na port 8080 kontenera
+
+docker-machine:
+docker-machine ls
+docker-machine start <name>
+docker-machine stop <name>
+podłączenie wskazanej maszyny (uwzględnienie maszyny w zmiennych środowiskowych)
+docker-machine env <name>
+docker-machine ip <name>
+docker-machine status <name>
+jeśli tworzymy pierwszą maszynę, to warto nazwać ją default
+--driver można podać sterownik dla wirtualnych maszyn
+docker-machine create <name>
+
+jeśli nie jesteśmy podłączeni do maszyny, musimy podłączyć jej zmienne środowiskowe
+eval $(docker-machine env default)
+
+możemy z powodzeniem korzystać z docker-machine pod linuksem
+korzystamy wtedy z dystrybucji boot2docker
+docker for windows używa NanoServer lub Server Core
+docker for Mac używa Alpine Linux
+
+layered file system - mamy warstwy plików, w przygotowanym (baked) obrazie są one tylko do odczytu (podobnie w kontenerze)
+warstwy obrazów mają unikalny ID, mogą być współdzielone przez kontenery bez powielania
+warstwy są również dzielone pomiędzy obrazami, nie trzeba wtedy niepotrzebnie ściągać obecnych lokalnie warstw
+kontener posiada dodatkową cienką warstwę odczytu/zapisu, właśnie to odróżnia obraz od kontenera (container layer)
+każdy kontener ma swoją warstwę R/W, nie podlegają one współdzieleniu
+te same dane (np. kod), które mamy w warstwie R/W możemy też umieścić (bake) w obrazie
+w momencie usunięcia kontenera, usuwamy też warstwę R/W, można to zmienić za pomocą volumes, które wskazują na dane (np. kod)
+volume (data volume) - specjalny typ katalogu w kontenerze; element, na który wskazuje volume nie jest usuwany z kontenerem, więc może być wykorzystany ponownie
+docelowy folder może być współdzielony między kontenerami
+kontener może mieć kilka volumes
+uaktualnienia obrazu nie dotykają volumes
+volume wskazuje na zamontowany folder na docker host
+
+docker run -p 8080:3000 --name node-test -v /var/www node:alpine
+docker sam zakłada folder, na który wskazuje volume
+folder na docker host nie jest usuwany wraz z usunięciem kontenera
+domyślna lokalizacja to /var/lib/docker/volumes/
+można usunąć folder wskazany przez volume na host wraz z kontenerem (inny kontener może jeszcze z niego korzystać)
+docker rm -v <id|name>
+
+docker volume ls
+docker volume rm <id>
+usuwa wszystkie nieużywane volumes dockera (nie te z podanych przez nas ścieżek)
+docker volume prune
+
+docker run -p 8080:3000 --name node-test -v $(pwd):/var/www node:alpine
+docker run -p 8080:3000 --name node-test -v ~/projects/docker_src:/var/www node:alpine
+możemy też sami kontrolować, gdzie ten folder będzie się znajdować
+
+docker inspect <container_name>
+źródło znajdziemy w tablicy obiektów "Mounts", w pierwszym obiekcie mamy "Source"
+jeśli podajemy ID, to wystarczą początkowe znaki, np. dwa
+
+testuję z node 6.10.0 i obrazem node:6.10.0-alpine
+npm install -g express express-generator
+pracuję w ~/projects/docker_src
+używam silnika szablonów handlebars, domyślnym silnikiem express jest jade, ale będzie nim pug (zmiana nazwy jade na pug, który będzie rozwijany)
+express ExpressSite --view=hbs
+npm install
+[DEBUG=expresssite:*] npm start
+-w określa folder początkowy w kontenerze - kontekst dla komend (WORKDIR w Dockerfile)
+express domyślnie używa 3000
+docker run -p 8080:3000 --name node-expresssite -v ~/projects/docker_src/ExpressSite:/var/www -w "/var/www" node:6.10.0-alpine npm start
+żeby wyjść trzeba w innej konsoli
+docker stop node-expresssite
+żeby ponownie uruchomić
+docker start node-expresssite
+ale nie widzimy wtedy zapytań HTTP
+trzeba do dołączyć STDOUT/STDERR
+docker start -a node-expresssite
+
+aplikacja aspnet core za pomocą yo:
+npm install -g yo generator-aspnet
+yo aspnet
+dostaniemy aplikację z frameworkiem lts 1.0.4
+wybieramy Web Application i Bootstrap, dajemy nazwę AspDockerApp
+projekt automatycznie ściąga zależności bower
+
+instalacja lokalna sdk core:
+sudo sh -c 'echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ yakkety main" > /etc/apt/sources.list.d/dotnetdev.list'
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 417A0893
+sudo apt-get update
+dostaniemy framework w wersji 1.1.1 (nie możemy mieć zainstalowanych dwóch frameworków, przydaje się docker i obrazy z różnymi wersjami)
+sudo apt-get install dotnet-dev-1.0.1
+pomoc, dowiemy się jaki typ aplikacji możemy stworzyć
+dotnet new
+
+aplikacja aspnetcore lokalnie:
+dotnet new mvc -o aspmvc-docker
+cd aspmvc-docker
+tym razem zależności instalujemy ręcznie
+bower install
+dotnet restore
+dotnet run
+
+mamy dotnet core, ale bez sdk, możemy uruchamiać tylko skompilowane aplikacje (latest/lts):
+docker pull microsoft/aspnetcore
+docker pull microsoft/aspnetcore:lts
+
+mamy dotnet core z sdk, możemy kompilować aplikacje  (latest/lts):
+docker pull microsoft/aspnetcore-build
+docker pull microsoft/aspnetcore-build:lts
+
+-t daje sudo tty
+
+docker run --name aspmvc-docker -i -t -p 8080:80 -v ~/projects/docker_src/aspmvc-docker:/app -w "/app" microsoft/aspnetcore-build bash
+
+docker run --name AspDockerApp -i -t -p 8080:80 -v ~/projects/docker_src/AspDockerApp:/app -w "/app" microsoft/aspnetcore-build:lts bash
+
+w konsoli:
+(bower install --allow-root)
+dotnet restore
+dotnet run
+
+nie trzeba konfigurować IP i portów
+wystarczy zrobić forward z 80 na 8080
+obraz ustawia zmienną ASPNETCORE_URLS na http://+:80 (lokalnie nasłuchujemy na 5000)
+
+docker build na podstawie Dockerfile tworzy layered file system i nowy obraz
+Dockerfile to plik tekstowy, który zawiera instrukcje buildowania
+instrukcje tworzą obraz pośredni (intermediate container), który jest cachowany i może być wykorzystany w późniejszym buildowaniu (cachowanie można wyłączyć parametrem --no-cache)
+
+FROM - z jakiego obrazu tworzymy nasz obraz (możemy od zera), budujemy kolejne warstwy w layered file system
+MAINTAINER
+RUN - również ściągnięcie czegoś z Internetu; jeśli nie mamy WORKDIR, to możemy podać również ścieżkę; możemy podać komendę lub tablicę (cudzysłów - to JSON)
+COPY - jedna z możliwości przekopiowania kodu do obrazu; lokalizacja, do której przekopiujemy kod będzie w osobnej warstwie (czy kilka lokacji da kilka warstw w jednym obrazie pośrednim?)
+ENTRYPOINT - punkt wejścia (komenda), z którego startuje kontener; można też podać samą komendę zamiast tablicy (cudzysłów - to JSON)
+WORKDIR - kontekst (lokalizacja), w której będzie działał kontener, np. lokalizacja package.json dla nodejs; RUN potrzebuje tej ścieżki
+EXPOSE - domyślny port, na którym wewnętrznie będzie działał kontener
+ENV PORT=3000 - zmienne środowiskowe do użycia w kontenerze
+VOLUME ["/var/www", "/logs"] - tutaj bez podania źródła, volume w standardowej lokalizacji dokera
+jeśli już mamy taki WORKDIR, to rezultaty RUN i COPY nie będą widoczne w volume, który zostanie zamontowany po starcie kontrolera (obraz nie wie o volumes, nowe montowanie w kontenerze nadpisze poprzedni zasób o takiej samej nazwie); kontener po starcie od razu zakończy działanie (nie będzie widział żadnych zasobów)
+
+FROM node:6.10.0-alpine
+MAINTAINER <name|email>
+COPY ~/projects/docker_src/<folder_name> /var/www
+WORKDIR /var/www
+RUN npm install
+EXPOSE 8080 (można użyć zdefiniowanej w ENV zmiennej z $ na początku, np. $PORT)
+ENTRYPOINT ["node", "server.js"]
+
+Dockerfile może mieć inną nazwę, np. node.dockerfile, ale jeśli w projekcie mamy tylko jeden taki plik, to warto zostawić standardową nazwę Dockerfile
+
+można też użyć --t
+można stworzyć nazwę z namespace użytkownika, np. gulci/node oraz dodać tag, korzystamy z formatu namespace/name:tag
+podajemy kontekst (PATH) - tam jest Dockerfile
+-f (--file) podajemy nazwę, którą nadaliśmy plikowi dokera
+docker build -t <tag_name>/node .
+docker build -t gulci/node .
+docker build -t gulci/aspmvc . --no-cache
+
+pamiętamy, że w microsoft/aspnetcore-build eksponujemy aplikację w kontenerze na porcie 80
+
+rm -rf dla node
+npm install -g rimraf
+rimraf node_modules
+
+każda instrukcja z Dockerfile generuje intermediate container, który zawiera warstwę layered file system, która może być użyta ponownie (cache)
+mamy dwa razy ENV (przypisania możemy zrobić w jednej instrukcji) i dzięki temu mamy dwa odrębne pośrednie obrazy
+docker images może nam pokazać warstwy pośrednich kontenerów z tagiem <none>, ale z nazwą inną niż <none> (gdy budujemy ten sam obraz, ale bez cachowania), po usunięciu obrazu te wpisy znikną
+usuwanie obrazu można dać z -f (jest opcja --no-prune, żeby nie usuwać nieotagowanych rodziców)
+usuwanie nieotagowanych obrazów
+awk wydrukuje trzecią kolumnę w każdej linii (kolumna TAG)
+docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
+(ewentualnie print \$3)
+tak nie usuniemy obrazów z docker images -a (pokazuje również <none>:<none>)
+tldr -> projectatomic.io, <none>:<none>
+
+docker run -d --name node-custom -p 8080:3000 gulci/node
+docker run -d --name aspmvc-custom -p 8090:80 gulci/aspmvc
+
+docker login
+docker korzysta z cache i szuka obrazów w hubie
+docker push <username>/<image_name>
+docker logout

@@ -1,0 +1,30 @@
+multitasking - kilka procesów działa na jednej maszynie, każdy może zrobić postęp bez pomocy użytkownika
+
+non-multitasking environment - działa tylko jeden proces, tylko aktywny proces może zrobić postęp
+
+taski są reprezentowane w OS jako procesy
+
+procesy są przeważnie samodzielne (standalone), nie mają o sobie wiedzy, mają alokowaną swoją pamięć (też segmentacja)
+
+segmentacja:
+procesy nie mogą odczytywać/modyfikować danych innych procesów
+komunikacja ma miejsce za pomocą: systemu plików, soketów lub pamięci współdzielonej
+
+multitasking - time slacing na jednym CPU
+
+multithreading - działanie kilku wątków obliczeniowych w tym samym czasie, w tym samym procesie
+
+wątki dzielą pamięć i zasoby, mają mniejszy narzut (overhead) niż procesy, są częścią tego samego programu
+w momencie zakończenia procesu również wszystkie wątki są zamykane
+
+nie ma gwarancji, że wątki będą działać równolegle, scheduler odpowiada za time slicing; JVM zarządza wątkami w schedulerze
+
+wątki: potrzebują własnego stosu, mają overhead pamięci, tworzenie i niszczenie zajmuje czas, przełączanie się między wątkami przez scheduler zabiera czas (zapisywanie stanu)
+
+starvation - zbyt wiele wątków będzie chciało dostać czas CPU
+
+concurrency - task jest podzielony na mniejsze kawałki, które działają równocześnie
+
+multithreading i multitasking są formami concurrency; jest nią również działanie części taska na innych komputerach bądź w chmurze
+
+Parallelism - 4:25
