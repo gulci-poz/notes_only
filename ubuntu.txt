@@ -1,0 +1,21 @@
+Automatyczne montowanie dysków na starcie systemu:
+sudo cp /etc/fstab /etc/fstab.old
+# spisujemy uuid partycji
+sudo blkid
+id -u <username>
+id -g <username>
+sudo vim /etc/fstab
+# domyślnie jest async, sync wyłącza cache i może obniżyć wydajność zapisu
+UUID=<uuid> /media/gulci/windows ntfs-3g uid=1000,gid=1000,umask=0022,[sync,]auto,rw 0 0
+
+Konfiguracja SSH:
+sudo apt-get install openssh-server
+# konfiguracja serwera: /etc/ssh/sshd_config
+# konfiguracja klienta: /etc/ssh/ssh_config
+sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+sudo vim /etc/ssh/sshd_config
+# po zapisaniu zmian
+sudo restart ssh
+# w razie wystąpienia błędu "Unable to connect to Upstart"
+sudo systemctl restart ssh
+https://help.ubuntu.com/community/SSH/OpenSSH/Configuring
