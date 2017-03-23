@@ -1,43 +1,38 @@
 1) Python & Django
 
--> Learn Python
+Learn Python
 Programming Python
-hard way - od 40
 
-Django (też projekty)
-1) djtut + reusable apps + deployment techniques
-2) djtry x 3 - trochę kiepskie te tutoriale
-rest framework tut + JSON auth
-3) two scoops
-4) djmaster
-5) djbook
-6) djgoat
-7) Kozaczko
+Django
+- djtut - reusable apps, deployment techniques
+- rest framework tut, JSON auth
+- two scoops
+- djmaster
+- djbook
+- djgoat
+- Kozaczko
+- testy, mokowanie - książki
+- GIT - yt
+- CI/CD - Pluralsight
 
-6) front-end -> ng2 Udemy, angular alicea + JavaBrains
+2) Front-end
 
-review -> djangular (Pluralsight)
+Udemy - ng2
+Alicea
+JavaBrains
+RWD
+JS Environment - Pluralsight
+JS Cloud9 - Pluralsight
 
-testy (Django!), mockowanie testów
-Pluralsight Python & Django
-Pluralsight Jenkins
+3) Java - javaworld 101, yt, JavaBrains
 
-2) Web -> Full Stack, powtórka Alicea, JavaBrains - Angular, kody HTTP, list(a/y) Pluralsight
+4) Blender + Python
 
-Angular 2 - Pluralsight + new Papa, Udemy (+ TypeScript)
-Pluralsight - Modules, TypeScript, npm, REST
-YT - bytecode
-
-sugestie: rxjs, webpack, envjs, js js-cloud9, kotlin (+Udemy)
-RWD - Converse
-
-~3) Java, Spring
-
-~4)
+5)
 
 Docker in Linux - Pluralsight, Docker in Action, Docker in Practice
 
-Mikroserwisy - Pluralsight, książka, yt
+Mikroserwisy - książka, yt
 Mikroserwisy Python - yt
 
 Golang
@@ -47,24 +42,22 @@ Linux - No Starch Press
 ansible - pluralsight
 orchestration (kubernetes)
 
-django + docker, CI/CD, book + tdd + 2 x js
-
 -> git (bisect, branches)
 -> testy (debugowanie w testach)
 -> bug tracker (tikety zamiast todo w kodzie)
 -> linter, styl (czytelność, przeczucie, pep8, js!, broken windows - już był brzydki kod)
 -> dokumentacja (Sphinx, angielski - pętla główna, pełne zdania, spelling - ide, testowalne przykłady)
 -> code review 29:30
-+ python-allegro-pyra14
 
-5) DBs
+6) DBs
 
-Postgress - Pinal Dave x 5
-Mongo
+Postgress - yt
+~ Mongo
 
-Projekty: platforma + baza-kb + zakupy
+7) Projekty:
+- platforma - blog techniczny
+- kb - helpdesk flow
 
-(może zacząć od frontend)
 Allegro - Python (orange outfit)
 MerixStudio
 contman, egnyte, cognifide
@@ -72,7 +65,7 @@ Cracking the Coding Interview
 b2b
 gooseberry
 writing idiomatic python (yt, book)
-git - atlassian, advanced scenarios
+git - advanced scenarios
 python - wzorce i antywzorce
 http://stackoverflow.com/questions/101268/hidden- features-of-python
 https://www.quantifiedcode.com/knowledge-base/
