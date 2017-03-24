@@ -1,0 +1,8 @@
+-> git (bisect, branches)
+-> testy (debugowanie w testach)
+-> bug tracker (tikety zamiast todo w kodzie)
+-> linter, styl (czytelność, przeczucie, pep8, js!, broken windows - już był brzydki kod)
+-> dokumentacja (Sphinx, angielski - pętla główna, pełne zdania, spelling - ide, testowalne przykłady)
+-> code review, ktoś inny musi spojrzeć na kod i dostrzec to, czego my nie widzimy; podciągnięcie poziomu pozostałych członków zespołu
+-> biblioteki, dokumentujemy workaroundy (issue i komentarz w kodzie)
+-> packaging, setup.py dla PyPI, licencja

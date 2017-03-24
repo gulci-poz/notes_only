@@ -12,7 +12,7 @@ Django
 - djgoat
 - Kozaczko
 - testy, mokowanie - książki
-- GIT - yt
+- GIT - yt x 2, book x 2, kozaczko notes
 - CI/CD - Pluralsight
 
 2) Front-end
@@ -41,13 +41,6 @@ Linux - No Starch Press
 
 ansible - pluralsight
 orchestration (kubernetes)
-
--> git (bisect, branches)
--> testy (debugowanie w testach)
--> bug tracker (tikety zamiast todo w kodzie)
--> linter, styl (czytelność, przeczucie, pep8, js!, broken windows - już był brzydki kod)
--> dokumentacja (Sphinx, angielski - pętla główna, pełne zdania, spelling - ide, testowalne przykłady)
--> code review 29:30
 
 6) DBs
 
